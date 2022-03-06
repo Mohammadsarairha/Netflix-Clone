@@ -6,7 +6,7 @@ export default function MovieList({ movies }) {
     return (
         <Row xs={1} md={3} className="g-4">
         {movies.map(movie => (
-            <Col>
+            <Col key={movie.id}>
                 <Movie movie={ movie }/>
             </Col>
         ))}

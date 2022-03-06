@@ -12,8 +12,8 @@ export default function Movie({ movie }) {
 
     return (
         <>
-        <Card key={movie.id} style={{ width: '25rem' }}>
-            <Card.Img variant="top" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
+        <Card key={movie.id} style={{ width: '25rem' , overflowY: "scroll", height:'40rem'}}>
+            <Card.Img variant="top" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} style={{ width: '100%' ,height:'25rem' }}/>
             <Card.Body>
                 <Card.Title>{`${movie.title}`}</Card.Title>
                 <Card.Text>
