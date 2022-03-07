@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 import MovieList from "../MovieList/MovieList";
-import Navbar from "../Navbar/Navbar";
 import './Home.css'
 export default function Home() {
 
@@ -19,7 +18,6 @@ export default function Home() {
 
     return (
         <>
-            <Navbar/>
             <MovieList movies={movies} />   
         </>
     )
