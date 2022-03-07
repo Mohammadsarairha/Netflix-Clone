@@ -6,6 +6,9 @@ export default function Navbar() {
       <Nav.Item>
         <Nav.Link href="/">Home</Nav.Link>
       </Nav.Item>
+      <Nav.Item>
+        <Nav.Link href="/FavMovies">Favorite movies  </Nav.Link>
+      </Nav.Item>
     </Nav>
   )
 }

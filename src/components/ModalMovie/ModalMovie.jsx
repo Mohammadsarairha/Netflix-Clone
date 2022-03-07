@@ -1,10 +1,43 @@
 import Modal from "react-bootstrap/Modal";
 import { Button } from "react-bootstrap";
-import { InputGroup } from "react-bootstrap";
-import { FormControl } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import Figure from 'react-bootstrap/Figure';
+import swal from 'sweetalert';
 
 export default function ModalMovie({ movie, show, handleClose }) {
+
+    function handelFormSubmit(e) {
+        e.preventDefault();
+        let comment = e.target.comment.value;
+        // To send a POST request to save the movie in our database as favorite movie
+        addToFavList(movie, comment);
+    }
+
+    async function addToFavList(movie, comment) {
+        const url = `${process.env.REACT_APP_SERVER}/addMovie`
+        // This should match the required data in the server
+        const data = {
+            title: movie.title,
+            release_date: movie.release_date,
+            poster_path: movie.poster_path,
+            overview: movie.overview,
+            comment: comment
+        }
+        // Use Fetch to send POST request
+        // eslint-disable-next-line no-unused-vars
+        const response = await fetch(url, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
+        });
+        swal("Favorite Movie", "Thank you for Your comment", "success");
+        handleClose();
+    }
+
+
     return (
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -18,21 +51,19 @@ export default function ModalMovie({ movie, show, handleClose }) {
                         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                     />
                 </Figure>
-            </Modal.Body>
-            <Modal.Footer>
-                <InputGroup className="mb-3">
-                    <FormControl
-                        placeholder="Add your comment"
-                    />
-                    <Button variant="outline-secondary" id="button-addon2">
+                <Form onSubmit={handelFormSubmit} style={{ margin: "0 10px" }}>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Comment</Form.Label>
+                        <Form.Control name="comment" type="text" placeholder="Enter Comment" />
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
                         Submit
                     </Button>
-                </InputGroup>
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Close
-                </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Save Changes
                 </Button>
             </Modal.Footer>
         </Modal>
